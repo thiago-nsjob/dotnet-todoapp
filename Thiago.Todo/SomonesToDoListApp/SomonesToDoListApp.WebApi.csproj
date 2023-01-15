@@ -247,9 +247,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SomonesToDoListApp.DataAccessLayer\SomonesToDoListApp.DataAccessLayer.csproj">
+    <ProjectReference Include="..\SomonesToDoListApp.DataAccessLayer\ThiagoToDo.DataAccessLayer.csproj">
       <Project>{c754d68e-279c-43cf-b8fd-22399aef21f0}</Project>
-      <Name>SomonesToDoListApp.DataAccessLayer</Name>
+      <Name>ThiagoToDo.DataAccessLayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\SomonesToDoListApp.Services\SomonesToDoListApp.Services.csproj">
       <Project>{3B13ADAB-5628-49C9-BA19-CC642E956727}</Project>

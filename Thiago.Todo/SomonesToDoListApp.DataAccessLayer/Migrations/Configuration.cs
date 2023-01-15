@@ -9,7 +9,9 @@ using System.Threading.Tasks;
 
 namespace SomeonesToDoListApp.DataAccessLayer.Migrations
 {
-    internal sealed class Configuration : DbMigrationsConfiguration<SomeonesToDoListContext>
+    //Latest Visual Studio need EF6 6.4.4
+    //https://stackoverflow.com/questions/41777590/entity-framework-value-cannot-be-null-parameter-name-type
+    internal sealed class Configuration : DbMigrationsConfiguration<ToDoDbContext>
     {
         /// <inheritdoc />
         /// <summary>
@@ -24,18 +26,18 @@ namespace SomeonesToDoListApp.DataAccessLayer.Migrations
         /// <summary>
         /// A seed method for a layer of base data for the to do list
         /// </summary>
-        /// <param name="someonesToDoListContext"></param>
-        protected override void Seed(SomeonesToDoListContext someonesToDoListContext)
+        /// <param name="dbContext"></param>
+        protected override void Seed(ToDoDbContext dbContext)
         {
-            if (someonesToDoListContext.ToDos.Any()) return;
+            if (dbContext.ToDos.Any()) return;
 
             var toDo = new ToDo
             {
                 Id = 1,
-                ToDoItem = "Feed my dog"
+                ToDoItem = "Upgrade to .Net 6 !"
             };
 
-            someonesToDoListContext.ToDos.AddOrUpdate(toDo);
+            dbContext.ToDos.AddOrUpdate(toDo);
 
         }
 

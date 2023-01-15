@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SomonesToDoListApp.Tests", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SomonesToDoListApp.Services", "SomonesToDoListApp.Services\SomonesToDoListApp.Services.csproj", "{3B13ADAB-5628-49C9-BA19-CC642E956727}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SomonesToDoListApp.DataAccessLayer", "SomonesToDoListApp.DataAccessLayer\SomonesToDoListApp.DataAccessLayer.csproj", "{C754D68E-279C-43CF-B8FD-22399AEF21F0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThiagoToDo.DataAccessLayer", "SomonesToDoListApp.DataAccessLayer\ThiagoToDo.DataAccessLayer.csproj", "{C754D68E-279C-43CF-B8FD-22399AEF21F0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SomonesToDoListApp.WebApi", "SomonesToDoListApp\SomonesToDoListApp.WebApi.csproj", "{547F61DA-E04F-4428-9D98-EB2F7B2359D6}"
 EndProject

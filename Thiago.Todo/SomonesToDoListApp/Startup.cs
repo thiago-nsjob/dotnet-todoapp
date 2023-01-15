@@ -18,7 +18,7 @@ namespace SomeonesToDoListApp
 			{
 				AllowAnyHeader = true,
 				AllowAnyMethod = true
-			}
+			};
 
 			// Default origin for Angular
 			corsPolicy.Origins.Add("http://localhost:4200");

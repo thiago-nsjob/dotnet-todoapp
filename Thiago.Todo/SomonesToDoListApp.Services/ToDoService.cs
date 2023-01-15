@@ -14,15 +14,15 @@ namespace SomeonesToDoListApp.Services
 	public class ToDoService : IToDoService
 	{
 		// Private property for the injected database context
-		private SomeonesToDoListContext SomeonesToDoListContext { get; set; }
+		private ToDoDbContext _dbContext { get; set; }
 
 		// Sets up the logger for the current service class
 		private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
 		// Injected the database context into the constructor of the service class
-		public ToDoService(SomeonesToDoListContext someonesToDoListContext)
+		public ToDoService(ToDoDbContext someonesToDoListContext)
 		{
-			SomeonesToDoListContext = someonesToDoListContext;
+			_dbContext = someonesToDoListContext;
 		}
 
 		/// <summary>
@@ -37,7 +37,7 @@ namespace SomeonesToDoListApp.Services
 				var toDo = Mapper.Map<ToDoViewModel, ToDo>(toDoViewModel);
 
 				// Add the entity to the database context
-				SomeonesToDoListContext.ToDos.Add(toDo);
+				_dbContext.ToDos.Add(toDo);
 
 				await Task.Delay(1000);
 
@@ -62,7 +62,7 @@ namespace SomeonesToDoListApp.Services
 			{
 				// Map the view model to the entity and return a collection of the current to do list items
 				return Mapper.Map<IEnumerable<ToDo>, IEnumerable<ToDoViewModel>>
-					(await SomeonesToDoListContext.ToDos.ToListAsync());
+					(await _dbContext.ToDos.ToListAsync());
 			}
 			catch (Exception exception)
 			{
@@ -75,7 +75,7 @@ namespace SomeonesToDoListApp.Services
 		public void Dispose()
 		{
 			// Disposes the service
-			SomeonesToDoListContext?.Dispose();
+			_dbContext?.Dispose();
 		}
 
 	}

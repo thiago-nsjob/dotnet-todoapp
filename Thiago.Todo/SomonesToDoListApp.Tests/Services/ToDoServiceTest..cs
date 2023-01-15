@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using SomeonesToDoListApp.Tests.Base;
 using AutoMapper;
+using SomeonesToDoListApp.Services.Mapping;
 
 namespace SomeonesToDoListApp.Tests.Services
 {
@@ -30,7 +31,7 @@ namespace SomeonesToDoListApp.Tests.Services
             var toDos = GetTestData();
 
             var mockToDoSet = SetupMockSetAsync(new Mock<DbSet<ToDo>>(), toDos);
-            var mockContext = new Mock<SomeonesToDoListContext>();
+            var mockContext = new Mock<ToDoDbContext>();
 
             mockContext.Setup(s => s.ToDos).Returns(mockToDoSet.Object);
 
@@ -58,7 +59,7 @@ namespace SomeonesToDoListApp.Tests.Services
             // act
             var mockSet = SetupMockSetAsync(new Mock<DbSet<ToDo>>(), toDos);
 
-            var mockContext = new Mock<SomeonesToDoListContext>();
+            var mockContext = new Mock<ToDoDbContext>();
 
             mockContext.Setup(s => s.ToDos).Returns(mockSet.Object);
 
@@ -84,7 +85,7 @@ namespace SomeonesToDoListApp.Tests.Services
             };
 
             // act
-            var mockContext = new Mock<SomeonesToDoListContext>();
+            var mockContext = new Mock<ToDoDbContext>();
 
             var mockSet = SetupMockSetAsync(new Mock<DbSet<ToDo>>(), toDos);
             mockContext.Setup(s => s.ToDos).Returns(mockSet.Object);
@@ -112,7 +113,7 @@ namespace SomeonesToDoListApp.Tests.Services
             // act
             var mockSet = SetupMockSetAsync(new Mock<DbSet<ToDo>>(), toDos);
 
-            var mockContext = new Mock<SomeonesToDoListContext>();
+            var mockContext = new Mock<ToDoDbContext>();
 
             mockContext.Setup(s => s.ToDos).Returns(mockSet.Object);
 

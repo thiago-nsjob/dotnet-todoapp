@@ -12,7 +12,7 @@ namespace SomeonesToDoListApp.Tests.Base
     public abstract class TestBase
     {
         
-        public static Mock<SomeonesToDoListContext> SetupMockDbContext<T>(Mock<SomeonesToDoListContext> mockContext, IQueryable set) where T : ToDo
+        public static Mock<ToDoDbContext> SetupMockDbContext<T>(Mock<ToDoDbContext> mockContext, IQueryable set) where T : ToDo
         {
             mockContext.Setup(s => s.ToDos.Remove(It.IsAny<T>())).Callback<T>(async (entity) => (await set.ToListAsync()).Remove(entity));
 

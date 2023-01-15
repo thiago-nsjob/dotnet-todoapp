@@ -118,7 +118,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\TestDbAsyncQueryProvider.cs" />
     <Compile Include="Services\ToDoServiceTest..cs" />
-    <Compile Include="Base\TestBase.cs" />
+    <Compile Include="Fixture\TestBase.cs" />
     <Compile Include="Controllers\ToDoControllerTest.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -128,9 +128,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SomonesToDoListApp.DataAccessLayer\SomonesToDoListApp.DataAccessLayer.csproj">
+    <ProjectReference Include="..\SomonesToDoListApp.DataAccessLayer\ThiagoToDo.DataAccessLayer.csproj">
       <Project>{c754d68e-279c-43cf-b8fd-22399aef21f0}</Project>
-      <Name>SomonesToDoListApp.DataAccessLayer</Name>
+      <Name>ThiagoToDo.DataAccessLayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\SomonesToDoListApp.Services\SomonesToDoListApp.Services.csproj">
       <Project>{3b13adab-5628-49c9-ba19-cc642e956727}</Project>

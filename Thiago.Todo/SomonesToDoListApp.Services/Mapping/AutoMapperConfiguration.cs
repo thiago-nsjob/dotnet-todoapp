@@ -2,7 +2,7 @@
 using SomeonesToDoListApp.Services.ViewModels;
 using AutoMapper;
 
-namespace SomeonesToDoListApp.Services
+namespace SomeonesToDoListApp.Services.Mapping
 {
     public class AutoMapperConfiguration
     {

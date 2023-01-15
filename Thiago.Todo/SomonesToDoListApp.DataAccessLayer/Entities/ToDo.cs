@@ -1,11 +1,10 @@
-﻿using SomeonesToDoListApp.DataAccessLayer.Interfaces;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SomeonesToDoListApp.DataAccessLayer.Entities
 {
-   [Table("dbo.ToDo")]
-   public class ToDo : IToDo
+   [Table("ToDo")]
+   public class ToDo 
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
