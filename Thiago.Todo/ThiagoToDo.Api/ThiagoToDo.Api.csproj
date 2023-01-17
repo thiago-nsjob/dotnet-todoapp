@@ -393,7 +393,7 @@
     <Compile Include="Contracts\ToDo.cs" />
     <Compile Include="Handler\ApiKeyAuthHandler.cs" />
     <Compile Include="Mapping\ApiMapperConfiguration.cs" />
-    <Compile Include="Mapping\Extensions\ToModel.cs" />
+    <Compile Include="Mapping\MappingExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Validation\ToDoValidator.cs" />
