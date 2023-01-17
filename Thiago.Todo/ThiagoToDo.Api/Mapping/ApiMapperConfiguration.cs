@@ -1,7 +1,7 @@
 ﻿
 using ThiagoToDo.Services.DTOs;
 using AutoMapper;
-using ThiagoToDo.Api.Contracts.Requests;
+using ThiagoToDo.Api.Contracts;
 
 namespace ThiagoToDo.Api.Mapping
 {
@@ -17,10 +17,16 @@ namespace ThiagoToDo.Api.Mapping
     {
 
         public ToDoMappingProfile()
+
+
         {
             CreateMap<ToDo, ToDoDTO>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.ToDoItem, opt => opt.MapFrom(src => src.Item));
+
+            CreateMap<ToDoDTO, ToDo>()
+               .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+               .ForMember(dest => dest.Item, opt => opt.MapFrom(src => src.ToDoItem));
         }
 
     }

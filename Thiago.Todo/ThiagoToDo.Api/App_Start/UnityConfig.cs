@@ -6,6 +6,11 @@ using ThiagoToDo.DataAccessLayer.Context;
 using AutoMapper;
 using ThiagoToDo.Api.Mapping;
 using ThiagoToDo.Services.Mapping;
+using System.Reflection;
+using NLog;
+using ThiagoToDoApp.DataAccessLayer.Abstractions;
+using ThiagoToDo.DataAccessLayer.Entities;
+using ThiagoToDoApp.DataAccessLayer;
 
 namespace ThiagoToDo.Api
 {
@@ -19,7 +24,7 @@ namespace ThiagoToDo.Api
           new Lazy<IUnityContainer>(() =>
           {
               var container = new UnityContainer();
-              RegisterTypes(container);
+              container.RegisterTypes();
               return container;
           });
 
@@ -39,13 +44,16 @@ namespace ThiagoToDo.Api
         /// allows resolving a concrete type even if it was not previously
         /// registered.
         /// </remarks>
-        public static void RegisterTypes(IUnityContainer container)
+        public static void RegisterTypes(this IUnityContainer container)
         {
             // NOTE: To load from web.config uncomment the line below.
             // Make sure to add a Unity.Configuration to the using statements.
             // container.LoadConfiguration();
 
+
+            //Transient
             container.RegisterType<ToDoDbContext>();
+            container.RegisterType<IRepository<ToDo>, ToDoRepository>();
             container.RegisterType<IToDoService, ToDoService>();
 
             Mapper.Initialize(cfg => {
@@ -53,7 +61,9 @@ namespace ThiagoToDo.Api
                 cfg.AddApiProfiler();
             });
 
+            //Singleton
             container.RegisterInstance(Mapper.Instance);
+       
         }
     }
 }

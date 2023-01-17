@@ -12,7 +12,7 @@ namespace ThiagoToDo.Api
 			routes.MapHttpRoute(
                 name: "ToDoApi",
                 routeTemplate: "api/{controller}/{id}",
-                defaults: new { controller = "Default", action = "Index",id = RouteParameter.Optional }
+                defaults: new { controller = "Info", action = "Index",id = RouteParameter.Optional }
             );
         }
 	}

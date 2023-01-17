@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ThiagoToDo.Api.Contracts.Requests
+namespace ThiagoToDo.Api.Contracts
 {
     public class ToDo
     {

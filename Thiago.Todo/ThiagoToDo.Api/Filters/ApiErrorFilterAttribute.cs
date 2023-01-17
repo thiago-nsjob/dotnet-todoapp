@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Web.Mvc;
 using System.Web.Http.Results;
+using System.Web.Http.Filters;
 
 namespace ThiagoToDo.Api.Filters
 {
-    public class ApiErrorFilterAttribute : FilterAttribute, IExceptionFilter
+    //TODO: Not Working
+    public class ApiErrorFilterAttribute : ExceptionFilterAttribute
     {
         
         public ApiErrorFilterAttribute() {

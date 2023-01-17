@@ -7,9 +7,13 @@ namespace ThiagoToDo.Services.Interfaces
 {
     public interface IToDoService : IDisposable
     {
-        Task<bool> CreateToDoAsync(ToDoDTO toDoViewModel);
+        Task<ToDoDTO> CreateToDoAsync(ToDoDTO dto);
 
         Task<IEnumerable<ToDoDTO>> GetToDoItemsAsync();
+
+        Task<ToDoDTO> ChangeTodoAsync(ToDoDTO dto);
+
+        Task DeleteTodoAsync(int id);
 
     }
 }

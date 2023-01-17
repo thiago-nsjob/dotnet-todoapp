@@ -3,17 +3,19 @@ using ThiagoToDo.Services.DTOs;
 using System.Threading.Tasks;
 using System.Web.Http;
 using NLog;
-using ThiagoToDo.Api.Contracts.Requests;
+using ThiagoToDo.Api.Contracts;
 using AutoMapper;
 using Unity;
 using ThiagoToDo.Api.Filters;
 using System;
+using ThiagoToDo.Api.Mapping;
 
 namespace ThiagoToDo.Api.Controllers
 {
-	[RoutePrefix("ToDos")]
-	[ApiErrorFilterAttribute]
-	public class ToDoController : ApiController
+    [Authorize(Users = "AllowedUser")]
+    [ApiErrorFilterAttribute]
+    [RoutePrefix("Todos")]
+    public class ToDoController : ApiController
 	{
 		private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
         private readonly IToDoService _toDoService;
@@ -32,10 +34,12 @@ namespace ThiagoToDo.Api.Controllers
 		/// <param name="toDo"></param>
 		/// <returns></returns>
 		[HttpPost]
-		public async Task<IHttpActionResult> CreateToDo([FromBody] ToDo toDo)
+        [Route("")]
+        public async Task<IHttpActionResult> Post([FromBody] ToDo toDo)
 		{
-            throw new Exception("Something went wrong");
-            return Ok(await _toDoService.CreateToDoAsync(_mapper.Map<ToDoDTO>(toDo)));
+            var dto = await _toDoService.CreateToDoAsync(toDo.ToDTO());
+
+            return Ok(dto.ToModel());
 	
 		}
 
@@ -44,31 +48,36 @@ namespace ThiagoToDo.Api.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<IHttpActionResult> GetToDos()
+        [Route("")]
+        public async Task<IHttpActionResult> GetAll()
 		{
-            return Ok(await _toDoService.GetToDoItemsAsync());
+            return Ok(
+                await _toDoService.GetToDoItemsAsync());
 		}
 
         /// <summary>
-        /// An HTTP Get request to retrieve all of the to do items
+        /// An HTTP PUT to modify a ToDo
         /// </summary>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IHttpActionResult> UpdateToDos()
+        [Route("")]
+        public async Task<IHttpActionResult> Put([FromBody] ToDo toDo)
         {
-            return Ok(await _toDoService.GetToDoItemsAsync());
+            return Ok(
+                await _toDoService.ChangeTodoAsync(toDo.ToDTO()));
           
         }
 
         /// <summary>
-        /// An HTTP Get request to retrieve all of the to do items
+        /// An HTTP Delete to wipe the informed TODO
         /// </summary>
         /// <returns></returns>
         [HttpDelete]
         [Route("{id}")]
-        public async Task<IHttpActionResult> DeleteToDo([FromUri] int id)
+        public async Task<IHttpActionResult> Delete([FromUri] int id)
         {
-           return Ok(await _toDoService.GetToDoItemsAsync());   
+           await _toDoService.DeleteTodoAsync(id);
+           return Ok();   
         }
 
     }
