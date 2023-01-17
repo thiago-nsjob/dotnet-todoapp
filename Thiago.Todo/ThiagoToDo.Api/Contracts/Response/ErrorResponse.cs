@@ -4,7 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.ServiceModel.Channels;
 using Newtonsoft.Json;
-using Swashbuckle.Swagger;
+
 
 namespace ThiagoToDo.Api.Contracts.Reponse
 {

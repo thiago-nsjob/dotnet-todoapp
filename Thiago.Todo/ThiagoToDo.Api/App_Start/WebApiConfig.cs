@@ -1,9 +1,6 @@
-﻿using ThiagoToDo.Services.Mapping;
+﻿
 using System.Web.Http;
-using ThiagoToDo.Api.Mapping;
-using AutoMapper;
 using ThiagoToDo.Api.Filters;
-using ThiagoToDo.Api.Handlers;
 
 namespace ThiagoToDo.Api
 {
@@ -13,7 +10,6 @@ namespace ThiagoToDo.Api
         {
             config.Filters.Add(new ApiErrorFilterAttribute());
             config.MapHttpAttributeRoutes();
-           
         }
     }
 }

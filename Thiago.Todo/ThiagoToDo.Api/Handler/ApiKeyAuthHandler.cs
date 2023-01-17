@@ -4,9 +4,6 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Linq;
-using NLog.Internal;
-using Swashbuckle.Swagger;
-using System.Net;
 using System.Web;
 using System.Web.Configuration;
 
