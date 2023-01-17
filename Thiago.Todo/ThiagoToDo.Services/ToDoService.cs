@@ -31,12 +31,14 @@ namespace ThiagoToDo.Services
 		/// <summary>
 		/// Creates a new to do list item asynchronously and returns true if successful 
 		/// </summary>
+		/// <remarks>The Id property is set to 0 regardless of the id informed</remarks>
 		/// <returns></returns>
 		public async Task<ToDoDTO> CreateToDoAsync(ToDoDTO dto)
 		{
 			try
 			{
 				var toDo = _mapper.Map<ToDo>(dto);
+				toDo.Id = 0;
 
                 var newToDo = await _repo.InsertAsync(toDo);
 
@@ -104,7 +106,7 @@ namespace ThiagoToDo.Services
                 throw;
             }
         }
-
+		//TODO:Fix this
         public void Dispose()
 		{
 		

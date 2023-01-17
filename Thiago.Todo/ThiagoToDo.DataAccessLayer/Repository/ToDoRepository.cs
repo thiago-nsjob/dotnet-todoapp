@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using ThiagoToDo.DataAccessLayer.Context;
 using ThiagoToDo.DataAccessLayer.Entities;
 using ThiagoToDoApp.DataAccessLayer.Abstractions;
@@ -29,7 +31,7 @@ namespace ThiagoToDoApp.DataAccessLayer
         }
 
         //TODO:implement paging
-        public async Task<IReadOnlyCollection<ToDo>> GetAllAsync() =>
+        public async Task<IEnumerable<ToDo>> GetAllAsync() =>
              await _dbContext.ToDos.ToListAsync();
         
         public async Task<ToDo> GetByIdAsync(int id) =>
@@ -48,7 +50,11 @@ namespace ThiagoToDoApp.DataAccessLayer
        
         public async Task<ToDo> UpdateAsync(ToDo entity)
         {
-            _dbContext.ToDos.AddOrUpdate(entity);
+            var todo = await GetByIdAsync(entity.Id) 
+                ?? throw new ArgumentException($"No ToDo found with id {entity.Id}",nameof(entity.Id));
+
+            todo.ToDoItem = entity.ToDoItem;
+
             await SaveAsync();
 
             return await GetByIdAsync(entity.Id);

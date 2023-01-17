@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace ThiagoToDoApp.DataAccessLayer.Abstractions
 {
-    public interface IRepository<T>
+    public interface IRepository<TEntity>
     {
-        Task<IReadOnlyCollection<T>> GetAllAsync();
-        Task<T> GetByIdAsync(int id);
-        Task<T> InsertAsync(T entity);
-        Task<T> UpdateAsync(T entity);
+        Task<IEnumerable<TEntity>> GetAllAsync();
+        Task<TEntity> GetByIdAsync(int id);
+        Task<TEntity> InsertAsync(TEntity entity);
+        Task<TEntity> UpdateAsync(TEntity entity);
         Task DeleteAsync(int id);
         Task SaveAsync();
     }

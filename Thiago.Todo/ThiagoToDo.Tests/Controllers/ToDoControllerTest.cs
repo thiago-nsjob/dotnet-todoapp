@@ -7,25 +7,37 @@ using ThiagoToDo.DataAccessLayer.Context;
 using ThiagoToDo.DataAccessLayer.Entities;
 using ThiagoToDo.Services;
 using ThiagoToDo.Services.DTOs;
-using ThiagoToDo.Tests.Base;
+using ThiagoToDo.DataAccessLayer.Context;
+using ThiagoToDo.DataAccessLayer.Entities;
+using ThiagoToDo.Services;
+using ThiagoToDo.Services.DTOs;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
+using ThiagoToDo.Tests.Base;
 using AutoMapper;
 using ThiagoToDo.Services.Mapping;
 using ThiagoToDo.Api.Mapping;
-using ThiagoToDo.Api.Contracts;
-using Unity;
+using ThiagoToDoApp.DataAccessLayer.Abstractions;
+using System.Collections.Generic;
+using FluentAssertions;
 using ThiagoToDo.Services.Interfaces;
+using System;
+using System.Web.WebPages;
+using FluentValidation;
 
 namespace ThiagoToDo.Tests.Controllers
 {
     [TestClass]
-    public class ToDoControllerTest : TestBase
+    public class ToDoControllerTest 
     {
 
         /* 
-         * This test should not exist.
-         * Integrated tests should use real dependencies ( in this Sql Server ) and the Api should be called over HTTP
+         * This tests should not be created like this.
+         * Integrated tests should use real dependencies ( in this Sql Server ) and the Api should be called over HTTP with WebApplicationFactory
+         * [dotnet core needed]
         */
 
         [ClassInitialize]
@@ -36,53 +48,114 @@ namespace ThiagoToDo.Tests.Controllers
                 cfg.AddServiceProfiler();
                 cfg.AddApiProfiler();
             });
+            
 
         }
 
         [TestMethod]
-        public async Task CreateToDoAsyncControllerTest()
+        public async Task Post_ShouldCreateNewTodo_WhenTodoIsValid()
         {
             // arrange
-            var toDos = GetTestData();
-
-            var mockToDoSet = SetupMockSetAsync(new Mock<DbSet<ToDo>>(), toDos);
-            var mockContext = new Mock<ToDoDbContext>();
-            var mockIoc = SetupIoC(new Mock<IUnityContainer>(), new ToDoService(mockContext.Object));
-            var toDoController = new ToDoController(mockIoc.Object,Mapper.Instance);
-
-            mockContext.Setup(s => s.ToDos).Returns(mockToDoSet.Object);
-
-            var newToDo = new Api.Contracts.Requests.ToDo{
-                Id = 4,
+            var toDos = new List<ToDo>(MockContext.MockTodoList);
+            var newToDo = new Api.Contracts.ToDo
+            {
                 Item = "Find my lost cat"
             };
-           
+
+            var mockRepo = MockContext.SetupTodoRepo(new Mock<IRepository<ToDo>>(), toDos);
+            var validator = new ToDoValidator();
 
             // act
-            var controllerActionResult = await toDoController.CreateToDo(newToDo);
+            var toDoService = new ToDoService(mockRepo.Object, Mapper.Instance);
+            var toDoController = new ToDoController(toDoService, Mapper.Instance, validator);
+
+
+            // act
+            var controllerActionResult = await toDoController.Post(newToDo);
 
             // assert
-            Assert.IsInstanceOfType(controllerActionResult, typeof(OkNegotiatedContentResult<bool>));
+            controllerActionResult.Should()
+                .BeOfType<OkNegotiatedContentResult<Api.Contracts.ToDo>>();
+
+            
         }
 
         [TestMethod]
-        public async Task GetToDoItemsAsyncControllerTest()
+        public async Task Get_ShouldGetAllToDos_WhenAny()
         {
             // arrange
-            var toDos = GetTestData();
+            var toDos = new List<ToDo>(MockContext.MockTodoList);
+            var newToDo = new Api.Contracts.ToDo
+            {
+                Item = "Find my lost cat"
+            };
 
-            var mockToDoSet = SetupMockSetAsync(new Mock<DbSet<ToDo>>(), toDos);
-            var mockContext = new Mock<ToDoDbContext>();
-            var mockIoc = SetupIoC(new Mock<IUnityContainer>(), new ToDoService(mockContext.Object));
-            var toDoController = new ToDoController(mockIoc.Object, Mapper.Instance);
-
-            mockContext.Setup(s => s.ToDos).Returns(mockToDoSet.Object);
+            var mockRepo = MockContext.SetupTodoRepo(new Mock<IRepository<ToDo>>(), toDos);
+            var validator = new ToDoValidator(); 
 
             // act
-            var controllerActionResult = await toDoController.GetToDos();
+            var toDoService = new ToDoService(mockRepo.Object, Mapper.Instance);
+            var toDoController = new ToDoController(toDoService, Mapper.Instance, validator);
+
+            // act
+            var controllerActionResult = await toDoController.GetAll();
 
             // assert
-            Assert.IsInstanceOfType(controllerActionResult, typeof(OkNegotiatedContentResult<IEnumerable<ToDoDTO>>));
+            controllerActionResult.Should()
+                .BeOfType<OkNegotiatedContentResult<IEnumerable<Api.Contracts.ToDo>>>();
+
+        }
+        [TestMethod]
+        public async Task Put_ShouldChangeTodo_WhenAny()
+        {
+            // arrange
+            var toDos = new List<ToDo>(MockContext.MockTodoList);
+            var newToDo = new Api.Contracts.ToDo
+            {
+                Id = 1,
+                Item = "Find my lost cat"
+            };
+
+            var mockRepo = MockContext.SetupTodoRepo(new Mock<IRepository<ToDo>>(), toDos);
+            var validator = new ToDoValidator();
+
+            // act
+            var toDoService = new ToDoService(mockRepo.Object, Mapper.Instance);
+            var toDoController = new ToDoController(toDoService, Mapper.Instance, validator);
+
+            // act
+            var controllerActionResult = await toDoController.Put(newToDo);
+
+            // assert
+            controllerActionResult.Should()
+                .BeOfType<OkNegotiatedContentResult<Api.Contracts.ToDo>>();
+
+        }
+
+        [TestMethod]
+        public async Task Delete_ShouldDeleteTodo_WhenAny()
+        {
+            // arrange
+            var toDos = new List<ToDo>(MockContext.MockTodoList);
+            var newToDo = new Api.Contracts.ToDo
+            {
+                Item = "Find my lost cat"
+            };
+
+            var mockRepo = MockContext.SetupTodoRepo(new Mock<IRepository<ToDo>>(), toDos);
+            var validator = new ToDoValidator();
+
+            // act
+            var toDoService = new ToDoService(mockRepo.Object, Mapper.Instance);
+            var toDoController = new ToDoController(toDoService, Mapper.Instance, validator);
+
+            // act
+            var controllerActionResult = await toDoController.Delete(3);
+
+            // assert
+            controllerActionResult.Should()
+                .BeOfType<OkResult>();
+
         }
     }
 }

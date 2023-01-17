@@ -9,6 +9,10 @@ using Unity;
 using ThiagoToDo.Api.Filters;
 using System;
 using ThiagoToDo.Api.Mapping;
+using System.Linq;
+using FluentValidation.Mvc;
+using FluentValidation;
+using FluentValidation.Results;
 
 namespace ThiagoToDo.Api.Controllers
 {
@@ -20,11 +24,14 @@ namespace ThiagoToDo.Api.Controllers
 		private readonly ILogger _logger = LogManager.GetCurrentClassLogger();
         private readonly IToDoService _toDoService;
         private readonly IMapper _mapper;
+        private readonly IValidator _validator;
 
-        public ToDoController(IToDoService toDoService, IMapper mapper)
+
+        public ToDoController(IToDoService toDoService, IMapper mapper,IValidator<ToDo> validator)
 		{
             _toDoService = toDoService;
             _mapper = mapper;
+            _validator = validator;
         }
 
 		
@@ -37,6 +44,7 @@ namespace ThiagoToDo.Api.Controllers
         [Route("")]
         public async Task<IHttpActionResult> Post([FromBody] ToDo toDo)
 		{
+
             var dto = await _toDoService.CreateToDoAsync(toDo.ToDTO());
 
             return Ok(dto.ToModel());
@@ -51,8 +59,9 @@ namespace ThiagoToDo.Api.Controllers
         [Route("")]
         public async Task<IHttpActionResult> GetAll()
 		{
-            return Ok(
-                await _toDoService.GetToDoItemsAsync());
+            var result = await _toDoService.GetToDoItemsAsync();
+
+            return Ok(result.Select(items=>items.ToModel()));
 		}
 
         /// <summary>
@@ -63,8 +72,14 @@ namespace ThiagoToDo.Api.Controllers
         [Route("")]
         public async Task<IHttpActionResult> Put([FromBody] ToDo toDo)
         {
-            return Ok(
-                await _toDoService.ChangeTodoAsync(toDo.ToDTO()));
+            var validation = _validator.Validate(toDo);
+
+            if (!validation.IsValid)
+                return BadRequest();
+
+            var result = await _toDoService.ChangeTodoAsync(toDo.ToDTO());
+                
+            return Ok(result.ToModel());
           
         }
 

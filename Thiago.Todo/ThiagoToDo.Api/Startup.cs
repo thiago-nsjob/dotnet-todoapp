@@ -34,6 +34,7 @@ namespace ThiagoToDo.Api
 
 			// Use the specified CORS options for cross domain requests
 			appBuilder.UseCors(corsOptions);
-		}
+       
+        }
 	}
 }

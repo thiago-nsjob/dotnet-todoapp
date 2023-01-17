@@ -1,4 +1,5 @@
 ﻿
+using FluentValidation.Mvc;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -12,13 +13,14 @@ namespace ThiagoToDo.Api
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-            GlobalConfiguration.Configure(WebApiConfig.Register);
-
-            GlobalConfiguration.Configuration.MessageHandlers.Add(new ApiKeyAuthHandler());
 
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-           ;  
+
+
+            GlobalConfiguration.Configure(WebApiConfig.Register);
+            GlobalConfiguration.Configuration.MessageHandlers.Add(new ApiKeyAuthHandler());
+
         }
     }
 }
