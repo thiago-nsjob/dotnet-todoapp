@@ -12,6 +12,8 @@ using ThiagoToDoApp.DataAccessLayer.Abstractions;
 using ThiagoToDo.DataAccessLayer.Entities;
 using ThiagoToDoApp.DataAccessLayer;
 using FluentValidation;
+using Unity.Lifetime;
+using Unity.Strategies;
 
 namespace ThiagoToDo.Api
 {
@@ -53,10 +55,10 @@ namespace ThiagoToDo.Api
 
 
             //Transient
-            container.RegisterType<ToDoDbContext>();
-            container.RegisterType<IRepository<ToDo>, ToDoRepository>();
-            container.RegisterType<IToDoService, ToDoService>();
-            container.RegisterType<IValidator<Contracts.ToDo>, ToDoValidator>();
+            container.RegisterType<ToDoDbContext>(TypeLifetime.Singleton);
+            container.RegisterType<IRepository<ToDo>, ToDoRepository>(TypeLifetime.Transient);
+            container.RegisterType<IToDoService, ToDoService>(TypeLifetime.Transient);
+            
 
             Mapper.Initialize(cfg => {
                 cfg.AddServiceProfiler();
@@ -64,8 +66,9 @@ namespace ThiagoToDo.Api
             });
 
             //Singleton
-            container.RegisterInstance(Mapper.Instance);
-      
+            container.RegisterInstance(Mapper.Instance, InstanceLifetime.Singleton);
+            container.RegisterType<IValidator<Contracts.ToDo>, ToDoValidator>(TypeLifetime.Singleton);
+
 
         }
     }
