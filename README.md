@@ -4,4 +4,4 @@ ToDo app build with two parts, a .Net Framework 6 api and a React front end.
 
 ## Quick rundown 
 
-[<img src="https://i.ytimg.com/vi/Hc79sDi3f0U/maxresdefault.jpg" width="50%">](https://www.youtube.com/watch?v=Hc79sDi3f0U "Now in Android: 55")
+[<img src="https://github.com/thiago-nsjob/dotnet-todoapp/blob/main/assets/quick_rundown%20.mp4" width="60%">](https://github.com/thiago-nsjob/dotnet-todoapp/blob/main/assets/quick_rundown%20.mp4 "Quick Demo")
