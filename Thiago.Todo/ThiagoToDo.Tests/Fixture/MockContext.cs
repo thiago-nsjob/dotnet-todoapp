@@ -20,42 +20,7 @@ namespace ThiagoToDo.Tests.Base
 {
     public static class MockContext
     {
-        
-        public static Mock<ToDoDbContext> SetupMockDbContext<T>(Mock<ToDoDbContext> mockContext, IQueryable set) where T : ToDo
-        {
-            mockContext.Setup(s => s.ToDos.Remove(It.IsAny<T>()))
-                .Callback<T>(async (entity) => (await set.ToListAsync())
-                .Remove(entity));
-
-            return mockContext;
-        }
-
-        public static Mock<DbSet<T>> SetupMockSet<T>(Mock<DbSet<T>> mockSet, IQueryable queryable)
-           where T : class, new()
-        {
-            mockSet.As<IQueryable<T>>().Setup(s => s.GetEnumerator()).Returns((IEnumerator<T>)queryable.GetEnumerator());
-            mockSet.As<IQueryable<T>>().Setup(s => s.Provider).Returns(queryable.Provider);
-            mockSet.As<IQueryable<T>>().Setup(s => s.ElementType).Returns(queryable.ElementType);
-            mockSet.As<IQueryable<T>>().Setup(s => s.Expression).Returns(queryable.Expression);
-            mockSet.Setup(s => s.Remove(It.IsAny<T>()))
-                .Callback<T>(async (entity) => (await queryable.ToListAsync()).Remove(entity));
-            return mockSet;
-        }
-
-
-        public static Mock<DbSet<T>> SetupMockSetAsync<T>(Mock<DbSet<T>> mockSet, IQueryable queryable)
-            where T : class, new()
-        {
-            mockSet.As<IDbAsyncEnumerable<T>>().Setup(s => s.GetAsyncEnumerator()).Returns(new TestDbAsyncEnumerator<T>((IEnumerator<T>)queryable.GetEnumerator()));
-            mockSet.As<IQueryable<T>>().Setup(s => s.Provider).Returns(new TestDbAsyncQueryProvider<T>(queryable.Provider));
-            mockSet.As<IQueryable<T>>().Setup(s => s.ElementType).Returns(queryable.ElementType);
-            mockSet.As<IQueryable<T>>().Setup(s => s.Expression).Returns(queryable.Expression);
-            mockSet.As<IQueryable<T>>().Setup(s => s.GetEnumerator()).Returns((IEnumerator<T>)queryable.GetEnumerator());
-            mockSet.Setup(s => s.Remove(It.IsAny<T>()))
-                .Callback<T>(async (entity) => (await queryable.ToListAsync()).Remove(entity));
-            return mockSet;
-        }
-
+       
 
         public static Mock<IRepository<ToDo>> SetupTodoRepo(Mock<IRepository<ToDo>> mockContext,  List<ToDo> data)
         {
@@ -99,8 +64,6 @@ namespace ThiagoToDo.Tests.Base
         }
 
 
-        public static IQueryable<ToDo> GetTestData() => MockTodoList.AsQueryable();
-      
         public static List<ToDo> MockTodoList = new List<ToDo>
             {
                 new ToDo
