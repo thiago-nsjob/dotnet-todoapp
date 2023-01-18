@@ -75,7 +75,7 @@ namespace ThiagoToDo.Api.Controllers
             var validation = _validator.Validate(toDo);
 
             if (!validation.IsValid)
-                return BadRequest();
+                return BadRequest("Invalid model parameters");
 
             var result = await _toDoService.ChangeTodoAsync(toDo.ToDTO());
                 
