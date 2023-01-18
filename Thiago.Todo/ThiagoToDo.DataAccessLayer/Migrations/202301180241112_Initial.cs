@@ -1,9 +1,9 @@
-namespace ThiagoToDo.DataAccessLayer.Migrations
+﻿namespace ThiagoToDo.DataAccessLayer.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class CreateToDoList : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
@@ -12,7 +12,7 @@ namespace ThiagoToDo.DataAccessLayer.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        ToDoItem = c.String(nullable: false, maxLength: 2048),
+                        ToDoItem = c.String(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             

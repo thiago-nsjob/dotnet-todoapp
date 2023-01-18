@@ -11,7 +11,6 @@ namespace ThiagoToDo.DataAccessLayer.Context
 	public class ToDoDbContext : DbContext
 	{
 		public ToDoDbContext() :base("ToDoDb"){
-			Database.SetInitializer(new CreateDatabaseIfNotExists<ToDoDbContext>());
 		}
 
 		public virtual DbSet<ToDo> ToDos { get; set; }

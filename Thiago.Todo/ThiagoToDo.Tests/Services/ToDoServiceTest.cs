@@ -17,7 +17,7 @@ using FluentAssertions;
 using ThiagoToDo.Services.Interfaces;
 using System;
 
-namespace SomeonesToDoListApp.Tests.Services
+namespace ThiagoToDo.Tests.Services
 {
     [TestClass]
     public class ToDoServiceTest 
