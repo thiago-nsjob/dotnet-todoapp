@@ -20,7 +20,6 @@ namespace ThiagoToDo.Api
 
             GlobalConfiguration.Configure(WebApiConfig.Register);
             GlobalConfiguration.Configuration.MessageHandlers.Add(new ApiKeyAuthHandler());
-
         }
     }
 }
