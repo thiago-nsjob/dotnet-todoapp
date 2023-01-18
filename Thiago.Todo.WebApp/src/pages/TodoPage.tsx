@@ -1,55 +1,28 @@
 import ITodo from "../api/ITodo";
 import { Todo } from "../components/Todo";
-import { createTodo, getTodos } from "../api/TodoApi";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { NewTodo } from "../components/NewTodo";
+import { Divider, Paper } from "@mui/material";
+import { useQuery } from "react-query";
+import { getTodos } from "../api/TodoApi";
 import styles from "./TodoPage.module.css";
-import { useState } from "react";
 
 export const TodoPage = () => {
+
   const { status, data } = useQuery<ITodo[], Error>("todos", getTodos);
- 
-  const queryClient = useQueryClient();
-
-  const newTodoMutation = useMutation("createTodo", {
-    mutationFn: createTodo,
-    onSuccess: () => queryClient.invalidateQueries(['todos'])
-  });
-
-  const [state, setState] = useState({
-    newTodo: "",
-    newTodoTouched: false,
-  });
-
-  function handleOnChange(e) {
-    setState({
-      ...state,
-      newTodo: e.target.value,
-      newTodoTouched: e.target.value !== "",
-    });
-  }
-
-  function handleOnNewTodo(e) {
-    newTodoMutation.mutate({ Id: 0, Item: state.newTodo });
-  }
 
   return status === "loading" ? (
     <span>Loading...</span>
   ) : (
-    <div className={styles.page}>
-      <h1>TodoPage</h1>
-      <input
-        type="text"
-        placeholder="Type your new todo here"
-        onChange={handleOnChange}
-      ></input>
-      {state.newTodoTouched && (
-        <button onClick={handleOnNewTodo}> Add Todo</button>
-      )}
-
+    <Paper elevation={3} className={styles.page}>
+      <h1>Thiago's ToDo App</h1>
+      <Divider />
+      <h3>Create a Todo</h3>
+      <NewTodo />
+      <Divider />
       <h3>TodoList</h3>
       {data?.map((todo) => (
         <Todo todo={todo} key={todo.Id} />
       ))}
-    </div>
+    </Paper>
   );
 };

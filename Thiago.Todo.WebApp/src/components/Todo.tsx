@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
 import { useState } from "react";
-import { useMutation, useQueryClient } from "react-query";
 import ITodo from "../api/ITodo";
+import { Button, ButtonGroup, TextField } from "@mui/material";
+import { useMutation, useQueryClient } from "react-query";
 import { changeTodo, deleteTodo } from "../api/TodoApi";
+
 
 export const Todo = (props: { key: number; todo: ITodo }) => {
   const queryClient = useQueryClient();
@@ -26,8 +27,7 @@ export const Todo = (props: { key: number; todo: ITodo }) => {
   const handleUpdate = (e) => {
     updateTodoMutation.mutate({ Id: props.todo.Id, Item: todoValue });
     setTouched(false);
-  }
-   
+  };
 
   const handleCancel = (e) => {
     setTodoValue(props.todo.Item);
@@ -40,18 +40,28 @@ export const Todo = (props: { key: number; todo: ITodo }) => {
   };
 
   return (
-    <div key={props.key}>
-      <div>Id{props.todo.Id}</div>
-      <div>Id{props.todo.Item}</div>
-      Item
-      <input type="text" value={todoValue} onChange={handleChange} />
+    <div key={props.key } className="todo-row">
+      <TextField className="todo-input"
+        id="outlined-basic"
+        label={`ToDo - ${props.todo.Id}`}
+        variant="outlined"
+        value={todoValue}
+        onChange={handleChange}  
+        sx={{width: '90%', paddingRight:'.5em'}} 
+      />
       {touched ? (
-        <div>
-          <button onClick={handleCancel}> Cancel</button>{" "}
-          <button onClick={handleUpdate}> Save</button>
-        </div>
+        <ButtonGroup variant="contained" aria-label="outlined button group">
+          <Button color="success" onClick={handleUpdate}>
+            Save
+          </Button>
+          <Button color="warning" onClick={handleCancel}>
+            Cancel
+          </Button>
+        </ButtonGroup>
       ) : (
-        <button onClick={handleDelete}> Delete</button>
+        <Button variant="contained" color="error" onClick={handleDelete}>
+          Delete
+        </Button>
       )}
     </div>
   );
