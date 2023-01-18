@@ -37,14 +37,14 @@ namespace ThiagoToDo.Tests.Services
         public async Task CreateToDoAsync_ShouldCreateNewTodo_WhenNewTodoInformed()
         {
             // arrange
-            var toDos = new List<ToDo>(MockContext.MockTodoList);
+            var toDos = new List<ToDo>(MockRepo.MockTodoList);
             var expectedTodo = new ToDoDTO
             {
                 Id = 4,
                 ToDoItem = "Find my lost cat"
             };
         
-            var mockRepo = MockContext.SetupTodoRepo(new Mock<IRepository<ToDo>>(), toDos);
+            var mockRepo = MockRepo.SetupTodoRepo(new Mock<IRepository<ToDo>>(), toDos);
 
             var newToDo = new ToDoDTO
             {
@@ -69,8 +69,8 @@ namespace ThiagoToDo.Tests.Services
         public async Task GetToDoItemsAsync_ShouldGetAllTodos_WhenAvailble()
         {
             // arrange
-            var toDos = new List<ToDo>(MockContext.MockTodoList);
-            var mockRepo = MockContext.SetupTodoRepo(new Mock<IRepository<ToDo>>(), toDos);
+            var toDos = new List<ToDo>(MockRepo.MockTodoList);
+            var mockRepo = MockRepo.SetupTodoRepo(new Mock<IRepository<ToDo>>(), toDos);
 
             // act
             var toDoService = new ToDoService(mockRepo.Object, Mapper.Instance);
@@ -85,8 +85,8 @@ namespace ThiagoToDo.Tests.Services
         public async Task GetToDoItemsAsync_ShouldChangeTodo_WhenExistingTodoInformed()
         {
             // arrange
-            var toDos = new List<ToDo>(MockContext.MockTodoList);
-            var mockRepo = MockContext.SetupTodoRepo(new Mock<IRepository<ToDo>>(), toDos);
+            var toDos = new List<ToDo>(MockRepo.MockTodoList);
+            var mockRepo = MockRepo.SetupTodoRepo(new Mock<IRepository<ToDo>>(), toDos);
 
             var expectedTodo = new ToDoDTO
             {
@@ -112,8 +112,8 @@ namespace ThiagoToDo.Tests.Services
         public async Task GetToDoItemsAsync_ShouldThrow_WhenTodoDoesNotExist()
         {
             // arrange
-            var toDos = new List<ToDo>(MockContext.MockTodoList);
-            var mockRepo = MockContext.SetupTodoRepo(new Mock<IRepository<ToDo>>(), toDos);
+            var toDos = new List<ToDo>(MockRepo.MockTodoList);
+            var mockRepo = MockRepo.SetupTodoRepo(new Mock<IRepository<ToDo>>(), toDos);
 
             var expectedTodo = new ToDoDTO
             {
@@ -134,8 +134,8 @@ namespace ThiagoToDo.Tests.Services
         public async Task DeleteToDoAsyncServiceTest()
         {
             // arrange
-            var toDos = new List<ToDo>(MockContext.MockTodoList);
-            var mockRepo = MockContext.SetupTodoRepo(new Mock<IRepository<ToDo>>(), toDos);
+            var toDos = new List<ToDo>(MockRepo.MockTodoList);
+            var mockRepo = MockRepo.SetupTodoRepo(new Mock<IRepository<ToDo>>(), toDos);
 
             // act
             var toDoService = new ToDoService(mockRepo.Object, Mapper.Instance);

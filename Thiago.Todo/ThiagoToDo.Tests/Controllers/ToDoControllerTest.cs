@@ -56,13 +56,13 @@ namespace ThiagoToDo.Tests.Controllers
         public async Task Post_ShouldCreateNewTodo_WhenTodoIsValid()
         {
             // arrange
-            var toDos = new List<ToDo>(MockContext.MockTodoList);
+            var toDos = new List<ToDo>(MockRepo.MockTodoList);
             var newToDo = new Api.Contracts.ToDo
             {
                 Item = "Find my lost cat"
             };
 
-            var mockRepo = MockContext.SetupTodoRepo(new Mock<IRepository<ToDo>>(), toDos);
+            var mockRepo = MockRepo.SetupTodoRepo(new Mock<IRepository<ToDo>>(), toDos);
             var validator = new ToDoValidator();
 
             // act
@@ -84,13 +84,13 @@ namespace ThiagoToDo.Tests.Controllers
         public async Task Get_ShouldGetAllToDos_WhenAny()
         {
             // arrange
-            var toDos = new List<ToDo>(MockContext.MockTodoList);
+            var toDos = new List<ToDo>(MockRepo.MockTodoList);
             var newToDo = new Api.Contracts.ToDo
             {
                 Item = "Find my lost cat"
             };
 
-            var mockRepo = MockContext.SetupTodoRepo(new Mock<IRepository<ToDo>>(), toDos);
+            var mockRepo = MockRepo.SetupTodoRepo(new Mock<IRepository<ToDo>>(), toDos);
             var validator = new ToDoValidator(); 
 
             // act
@@ -109,14 +109,14 @@ namespace ThiagoToDo.Tests.Controllers
         public async Task Put_ShouldChangeTodo_WhenAny()
         {
             // arrange
-            var toDos = new List<ToDo>(MockContext.MockTodoList);
+            var toDos = new List<ToDo>(MockRepo.MockTodoList);
             var newToDo = new Api.Contracts.ToDo
             {
                 Id = 1,
                 Item = "Find my lost cat"
             };
 
-            var mockRepo = MockContext.SetupTodoRepo(new Mock<IRepository<ToDo>>(), toDos);
+            var mockRepo = MockRepo.SetupTodoRepo(new Mock<IRepository<ToDo>>(), toDos);
             var validator = new ToDoValidator();
 
             // act
@@ -136,13 +136,13 @@ namespace ThiagoToDo.Tests.Controllers
         public async Task Delete_ShouldDeleteTodo_WhenAny()
         {
             // arrange
-            var toDos = new List<ToDo>(MockContext.MockTodoList);
+            var toDos = new List<ToDo>(MockRepo.MockTodoList);
             var newToDo = new Api.Contracts.ToDo
             {
                 Item = "Find my lost cat"
             };
 
-            var mockRepo = MockContext.SetupTodoRepo(new Mock<IRepository<ToDo>>(), toDos);
+            var mockRepo = MockRepo.SetupTodoRepo(new Mock<IRepository<ToDo>>(), toDos);
             var validator = new ToDoValidator();
 
             // act

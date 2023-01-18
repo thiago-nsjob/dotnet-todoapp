@@ -18,9 +18,14 @@ using FluentValidation;
 
 namespace ThiagoToDo.Tests.Base
 {
-    public static class MockContext
+    public static class MockRepo
     {
-       
+        // I belive there is little value and a lot of effort in maitaining ORM mocks and test
+
+        // This mock shoul be using a real db.
+        // To test the Underlying db and the Repo itselt, a Test database is needed.
+        // InMem db from EF7 onwards or a disposable container ( Testcontainer lib)
+
 
         public static Mock<IRepository<ToDo>> SetupTodoRepo(Mock<IRepository<ToDo>> mockContext,  List<ToDo> data)
         {
